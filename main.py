@@ -13,16 +13,16 @@ else:
 
 
 def bytes_to_gigas(value):
-    return f'{value / 1024 / 1024 / 1024: .2f} GB'
+    return f'{value / 1024**3: .2f} GB'
 
 def bytes_to_megas(value):
-    return f'{value / 1024 / 1024: .2f} MB'
+    return f'{value / 1024**2: .2f} MB'
 
 def seconds_to_minutes(value):
     return f'{value / 60: .2f} minutos'
 
 def seconds_to_hours(value):
-    return f'{value / 60 / 60: .2f} horas'
+    return f'{value / 60**2: .2f} horas'
 
 isWorking = True
 
@@ -105,10 +105,13 @@ while(isWorking):
                 print("="*30)
                 print("Utilização atual: ")
                 print("="*30)
-                while(isWorkingCurrentUse):
-                    currentUse = psutil.cpu_percent(1)
-                    print(currentUse, "%")  #Parar loop
-                os.system(clear) 
+                try:
+                    while(isWorkingCurrentUse):
+                        currentUse = psutil.cpu_percent(1)
+                        print(currentUse, "%") 
+                except KeyboardInterrupt:
+                    pass
+                    os.system(clear) 
             elif(option == 5):
                 isWorkingCPU = False
     elif(option == 2):
@@ -209,7 +212,7 @@ while(isWorking):
                 print("="*30)
                 print("Sensor da bateria: ")
                 print("="*30)
-                print("Bateria: ", percent, '%')
+                print("Bateria: ", round(percent), '%')
                 print("Tempo restante: ", secsleft)
                 print("Cabo de energia conectado: ", powerPlugged)
                 print("="*30)
@@ -245,18 +248,15 @@ while(isWorking):
                 os.system(clear) 
             elif(option == 2):
                 os.system(clear)        
-                user = psutil.users()
+                started = psutil.users()[0].started
+                dateTime = datetime.datetime.fromtimestamp(started).strftime("%d-%m-%Y %H:%M:%S")
 
                 print("="*30)
                 print("Dados dos usuários: ")
-                for i in user:
-                    started = psutil.users()[0].started
-                    dateTime = datetime.datetime.fromtimestamp(started).strftime("%d-%m-%Y %H:%M:%S")
-
-                    print("="*30)
-                    print("Nome: ", psutil.users()[0].name)
-                    print("Host: ", psutil.users()[0].host)
-                    print("Ultima vez usado em: ", dateTime)
+                print("="*30)
+                print("Nome: ", psutil.users()[0].name)
+                print("Host: ", psutil.users()[0].host)
+                print("Ultima vez usado em: ", dateTime)
                     
                 print("="*30)
                 input("Aperte enter para voltar...")  
