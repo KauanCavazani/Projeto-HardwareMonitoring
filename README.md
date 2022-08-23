@@ -14,7 +14,7 @@ Sistema desenvolvido para a aula de cálculo computacional em python para fazer 
 
 - Acesso aos dados da memória RAM e do HD
 - Acesso aos dados do sensor da bateria
-- Acesso a lista de usuários cadastrados na máquina
+- Acesso aos dados da frequência da CPU
 - Acesso ao tempo de processamento da CPU
 
 ## Autores
